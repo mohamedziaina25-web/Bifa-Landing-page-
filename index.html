@@ -1,1 +1,752 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bifa — مشروب الفواكه المشكلة | طلب سريع</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bifa-blue: #163a8a;
+            --bifa-blue-dark: #0e255c;
+            --bifa-red: #d9232e;
+            --bifa-yellow: #facc15;
+            --bifa-green: #15803d;
+            --bifa-green-dark: #116631;
+            --bg-soft: #f3f6fc;
+            --text-main: #1b2232;
+            --text-muted: #5c667a;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-soft);
+            color: var(--text-main);
+            line-height: 1.65;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 18px 50px;
+        }
+
+        /* --- الشريط العلوي --- */
+        .top-bar {
+            background: linear-gradient(135deg, var(--bifa-blue-dark), var(--bifa-blue));
+            color: var(--white);
+            padding: 14px 18px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 0.92rem;
+        }
+
+        .top-bar span {
+            color: var(--bifa-yellow);
+        }
+
+        /* --- قسم عرض المنتج --- */
+        .product-hero {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 24px 20px;
+            margin-top: 20px;
+            box-shadow: 0 10px 28px rgba(22, 58, 138, 0.08);
+            text-align: center;
+            border: 1px solid #e2e8f5;
+        }
+
+        .badge-new {
+            display: inline-block;
+            background: var(--bifa-yellow);
+            color: var(--bifa-blue-dark);
+            font-weight: 900;
+            font-size: 0.85rem;
+            padding: 4px 14px;
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .product-title {
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: var(--bifa-blue-dark);
+            margin-bottom: 6px;
+        }
+
+        .product-sub {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+        }
+
+        .product-img-wrap {
+            background: #f9fafc;
+            border: 1px solid #e5ebf5;
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .product-img-wrap img {
+            max-height: 290px;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .price-banner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            background: #fff8e6;
+            border: 1px solid #fde047;
+            padding: 14px;
+            border-radius: 16px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .price-now {
+            font-size: 2.1rem;
+            font-weight: 900;
+            color: var(--bifa-red);
+        }
+
+        .price-label {
+            font-weight: 800;
+            color: var(--bifa-blue-dark);
+            font-size: 0.95rem;
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+
+        .feature-item {
+            background: var(--bg-soft);
+            padding: 12px 8px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--bifa-blue-dark);
+        }
+
+        .feature-item strong {
+            display: block;
+            font-size: 1.05rem;
+            color: var(--bifa-red);
+        }
+
+        /* --- نموذج الطلب --- */
+        .order-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 26px 20px;
+            margin-top: 22px;
+            box-shadow: 0 12px 30px rgba(22, 58, 138, 0.1);
+            border: 2px solid var(--bifa-blue);
+        }
+
+        .order-title {
+            text-align: center;
+            font-size: 1.45rem;
+            font-weight: 900;
+            color: var(--bifa-blue-dark);
+            margin-bottom: 6px;
+        }
+
+        .order-hint {
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 800;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1.5px solid #cbd5e1;
+            font-size: 0.95rem;
+            background: #fff;
+            color: var(--text-main);
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--bifa-blue);
+        }
+
+        /* --- تحكم الكمية --- */
+        .qty-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-soft);
+            border: 1.5px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 6px 10px;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            direction: ltr;
+        }
+
+        .qty-btn {
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 8px;
+            background: var(--bifa-blue);
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .qty-btn:hover {
+            background: var(--bifa-blue-dark);
+        }
+
+        .qty-input {
+            width: 56px !important;
+            text-align: center;
+            font-weight: 900;
+            padding: 6px !important;
+        }
+
+        .delivery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .delivery-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-soft);
+            border: 1.5px solid #cbd5e1;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .delivery-option input {
+            width: auto;
+            accent-color: var(--bifa-blue);
+        }
+
+        /* --- ملخص الفاتورة --- */
+        .summary-box {
+            background: #f8fafc;
+            border: 1.5px dashed var(--bifa-blue);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 18px 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 10px;
+            margin-top: 6px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--bifa-red);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            background: var(--bifa-green);
+            color: var(--white);
+            font-size: 1.15rem;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(21, 128, 61, 0.28);
+            transition: 0.25s;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: var(--bifa-green-dark);
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .status-msg {
+            margin-top: 14px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: none;
+            text-align: center;
+        }
+
+        .status-success {
+            background: #dcfce7;
+            color: #14532d;
+            border: 1px solid #86efac;
+        }
+
+        .status-error {
+            background: #fee2e2;
+            color: #7f1d1d;
+            border: 1px solid #fca5a5;
+        }
+
+        @media (max-width: 520px) {
+            .row-2, .delivery-grid, .features-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        توصيل متوفر إلى <span>69 ولاية</span> • الدفع عند الاستلام • إرسال فوري للطلب
+    </div>
+
+    <div class="container">
+        <!-- بطاقة المنتج -->
+        <section class="product-hero">
+            <span class="badge-new">جديد • 200 مل</span>
+            <h1 class="product-title">Bifa — مشروب الفواكه المشكلة</h1>
+            <p class="product-sub">مزيج منعش من الفواكه المشكلة مع مصاصة مدمجة — يُقدّم بارداً</p>
+
+            <div class="product-img-wrap">
+                <!-- ارفع صورة المنتج بجانب index.html باسم product.jpg -->
+                <img src="./product.jpg" alt="Bifa مشروب الفواكه المشكلة" onerror="this.style.display='none'">
+            </div>
+
+            <div class="price-banner">
+                <span class="price-label">سعر الوحدة:</span>
+                <span class="price-now">2000 دج</span>
+            </div>
+
+            <div class="features-list">
+                <div class="feature-item">
+                    <strong>200 مل</strong>
+                    حجم عملي ومناسب
+                </div>
+                <div class="feature-item">
+                    <strong>69 ولاية</strong>
+                    تغطية توصيل شاملة
+                </div>
+                <div class="feature-item">
+                    <strong>مكتب / منزل</strong>
+                    خيارات توصيل مرنة
+                </div>
+            </div>
+        </section>
+
+        <!-- نموذج الطلب -->
+        <section class="order-card" id="order-section">
+            <h2 class="order-title">اطلب الآن — الدفع عند الاستلام</h2>
+            <p class="order-hint">املأ بياناتك واختر الكمية وسيتم إرسال طلبك مباشرة إلى بوت التلجرام</p>
+
+            <form id="orderForm">
+                <div class="row-2">
+                    <div class="form-group">
+                        <label for="firstName">الاسم *</label>
+                        <input type="text" id="firstName" required placeholder="مثال: محمد">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">اللقب *</label>
+                        <input type="text" id="lastName" required placeholder="مثال: زينة">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">رقم الهاتف *</label>
+                    <input type="tel" id="phone" required pattern="[0-9+\s]{9,15}" placeholder="05 / 06 / 07 ...">
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">الكمية المطلوبة *</label>
+                    <div class="qty-box">
+                        <span style="font-weight:700; color:var(--text-muted); font-size:0.88rem;">عدد الوحدات (2000 دج / وحدة)</span>
+                        <div class="qty-controls">
+                            <button type="button" class="qty-btn" id="minusBtn" aria-label="إنقاص الكمية">−</button>
+                            <input type="number" id="quantity" class="qty-input" value="1" min="1" max="500" required>
+                            <button type="button" class="qty-btn" id="plusBtn" aria-label="زيادة الكمية">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-2">
+                    <div class="form-group">
+                        <label for="wilaya">الولاية (69 ولاية) *</label>
+                        <select id="wilaya" required>
+                            <option value="">اختر الولاية</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="commune">البلدية *</label>
+                        <select id="commune" required>
+                            <option value="">اختر البلدية</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>نوع التوصيل *</label>
+                    <div class="delivery-grid">
+                        <label class="delivery-option">
+                            <input type="radio" name="deliveryType" value="desk" checked>
+                            <span>إلى المكتب (Stop Desk)</span>
+                        </label>
+                        <label class="delivery-option">
+                            <input type="radio" name="deliveryType" value="home">
+                            <span>إلى المنزل (À domicile)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="summary-box">
+                    <div class="summary-row">
+                        <span>الكمية:</span>
+                        <span id="qtySummaryText">1</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>سعر المنتجات:</span>
+                        <span id="itemsPriceText">2000 دج</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>سعر التوصيل (<span id="deliveryLabelText">إلى المكتب</span>):</span>
+                        <span id="deliveryCostText">0 دج</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>المجموع الكلي للدفع:</span>
+                        <span id="totalCostText">2000 دج</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">تأكيد الطلب عبر التلجرام</button>
+                <div class="status-msg" id="statusMsg"></div>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        // إعدادات بوت التلجرام — استبدل القيمتين ببيانات بوتك الحقيقي
+        const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";
+        const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID";
+
+        const UNIT_PRICE = 2000;
+        // اجعلها true إذا كان سعر التوصيل يتضاعف مع الكمية، أو false إذا كان سعر التوصيل ثابتاً لكل طلب
+        const MULTIPLY_SHIPPING_BY_QTY = false;
+
+        // قائمة الـ 69 ولاية مع أسعار التوصيل (مكتب / منزل) والبلديات — عدّل الأسعار والبلديات حسب جدول التوصيل لديك
+        const wilayas69 = [
+            { code: "01", name: "أدرار", desk: 800, home: 1150, communes: ["أدرار", "رقان", "تسابيت", "أولف", "فنوغيل"] },
+            { code: "02", name: "الشلف", desk: 450, home: 700, communes: ["الشلف", "تنس", "أبو الحسن", "وادي الفضة", "بوقادير"] },
+            { code: "03", name: "الأغواط", desk: 600, home: 850, communes: ["الأغواط", "آفلو", "قصر الحيران", "عين ماضي", "بريدة"] },
+            { code: "04", name: "أم البواقي", desk: 450, home: 700, communes: ["أم البواقي", "عين البيضاء", "عين مليلة", "مسكيانة", "سيقوس"] },
+            { code: "05", name: "باتنة", desk: 450, home: 700, communes: ["باتنة", "بريكة", "أريس", "مروانة", "عين التوتة"] },
+            { code: "06", name: "بجاية", desk: 450, home: 700, communes: ["بجاية", "أقبو", "تازملت", "خراطة", "سيدي عيش"] },
+            { code: "07", name: "بسكرة", desk: 550, home: 800, communes: ["بسكرة", "سيدي عقبة", "طولقة", "أولاد جلال (سابقاً)", "الوطاية"] },
+            { code: "08", name: "بشار", desk: 750, home: 1050, communes: ["بشار", "القنادسة", "العبادلة", "بني ونيف", "لحمر"] },
+            { code: "09", name: "البليدة", desk: 400, home: 600, communes: ["البليدة", "بوفاريك", "الأربعاء", "مفتاح", "بني تامو"] },
+            { code: "10", name: "البويرة", desk: 450, home: 700, communes: ["البويرة", "الأخضرية", "سور الغزلان", "عين بسام", "مشدالة"] },
+            { code: "11", name: "تمنراست", desk: 950, home: 1300, communes: ["تمنراست", "تازروك", "أباليسا", "إدلس"] },
+            { code: "12", name: "تبسة", desk: 500, home: 750, communes: ["تبسة", "العوينات", "الشريعة", "بئر العاتر", "الونزة"] },
+            { code: "13", name: "تلمسان", desk: 450, home: 700, communes: ["تلمسان", "مغنية", "الغزوات", "سبدو", "رمشي"] },
+            { code: "14", name: "تيارت", desk: 400, home: 650, communes: ["تيارت", "السوقر", "فرندة", "مهدية", "قصر الشلالة", "رحوية", "دحموني"] },
+            { code: "15", name: "تيزي وزو", desk: 450, home: 700, communes: ["تيزي وزو", "عزازقة", "ذراع الميزان", "الأربعاء ناث إيراثن", "تيقزيرت"] },
+            { code: "16", name: "الجزائر", desk: 350, home: 550, communes: ["الجزائر الوسطى", "باب الزوار", "الحراش", "بئر مراد رايس", "الشراقة", "الدار البيضاء", "حسين داي"] },
+            { code: "17", name: "الجلفة", desk: 550, home: 800, communes: ["الجلفة", "مسعد", "عين وسارة", "حاسي بحبح", "فيض البطمة"] },
+            { code: "18", name: "جيجل", desk: 450, home: 700, communes: ["جيجل", "الطاهير", "الميلية", "الشقفة", "زيامة منصورية"] },
+            { code: "19", name: "سطيف", desk: 400, home: 650, communes: ["سطيف", "العلمة", "عين ولمان", "بوقاعة", "عين أرنات"] },
+            { code: "20", name: "سعيدة", desk: 450, home: 700, communes: ["سعيدة", "الحساسنة", "يوب", "سيدي بوبكر", "أولاد خالد"] },
+            { code: "21", name: "سكيكدة", desk: 450, home: 700, communes: ["سكيكدة", "عزابة", "القل", "تمالوس", "الحروش"] },
+            { code: "22", name: "سيدي بلعباس", desk: 450, home: 700, communes: ["سيدي بلعباس", "تلاغ", "بن باديس", "سفيزف", "رأس الماء"] },
+            { code: "23", name: "عنابة", desk: 450, home: 700, communes: ["عنابة", "الحجار", "البوني", "برحال", "شطايبي"] },
+            { code: "24", name: "قالمة", desk: 450, home: 700, communes: ["قالمة", "وادي الزناتي", "بوشقوف", "هيليوبوليس", "قلعة بوصبع"] },
+            { code: "25", name: "قسنطينة", desk: 400, home: 650, communes: ["قسنطينة", "الخروب", "عين السمارة", "حامة بوزيان", "زيغود يوسف"] },
+            { code: "26", name: "المدية", desk: 450, home: 700, communes: ["المدية", "البرواقية", "قصر البخاري", "بني سليمان", "تابلاط"] },
+            { code: "27", name: "مستغانم", desk: 450, home: 700, communes: ["مستغانم", "سيدي علي", "عين تادلس", "ماسرة", "حاسي ماماش"] },
+            { code: "28", name: "المسيلة", desk: 500, home: 750, communes: ["المسيلة", "بوسعادة", "سيدي عيسى", "مقرة", "حمام الضلعة"] },
+            { code: "29", name: "معسكر", desk: 450, home: 700, communes: ["معسكر", "سيق", "المحمدية", "تيغنيف", "غريس"] },
+            { code: "30", name: "ورقلة", desk: 650, home: 950, communes: ["ورقلة", "حاسي مسعود", "الرويسات", "أنقوسة", "سيدي خويلد"] },
+            { code: "31", name: "وهران", desk: 400, home: 600, communes: ["وهران", "بئر الجير", "السانيا", "أرزيو", "عين الترك", "قديل"] },
+            { code: "32", name: "البيض", desk: 650, home: 900, communes: ["البيض", "الأبيض سيدي الشيخ", "بريزينة", "بوقطب", "الرقاصة"] },
+            { code: "33", name: "إليزي", desk: 950, home: 1300, communes: ["إليزي", "إن أمناس", "الدبداب", "برج عمر إدريس"] },
+            { code: "34", name: "برج بوعريريج", desk: 450, home: 700, communes: ["برج بوعريريج", "رأس الوادي", "المنصورة", "مجانة", "برج الغدير"] },
+            { code: "35", name: "بومرداس", desk: 400, home: 650, communes: ["بومرداس", "الثنية", "برج منايل", "خميس الخشنة", "دلس"] },
+            { code: "36", name: "الطارف", desk: 500, home: 750, communes: ["الطارف", "القالة", "بن مهيدي", "الذرعان", "بوثلجة"] },
+            { code: "37", name: "تندوف", desk: 900, home: 1250, communes: ["تندوف", "أم العسل"] },
+            { code: "38", name: "تيسمسيلت", desk: 450, home: 700, communes: ["تيسمسيلت", "ثنية الأحد", "برج الأمير عبد القادر", "خميستي", "لرجام"] },
+            { code: "39", name: "الوادي", desk: 650, home: 950, communes: ["الوادي", "الرباح", "الدبيلة", "البياضة", "قمار"] },
+            { code: "40", name: "خنشلة", desk: 500, home: 750, communes: ["خنشلة", "قايس", "ششار", "أولاد رشاش", "بابار"] },
+            { code: "41", name: "سوق أهراس", desk: 500, home: 750, communes: ["سوق أهراس", "سدراتة", "تاورة", "الحدادة", "المراهنة"] },
+            { code: "42", name: "تيبازة", desk: 400, home: 650, communes: ["تيبازة", "القليعة", "شرشال", "حجوط", "فوكة"] },
+            { code: "43", name: "ميلة", desk: 450, home: 700, communes: ["ميلة", "شلغوم العيد", "فرجيوة", "تاجنانت", "وادي النجاء"] },
+            { code: "44", name: "عين الدفلى", desk: 450, home: 700, communes: ["عين الدفلى", "خميس مليانة", "العطاف", "مليانة", "جندل"] },
+            { code: "45", name: "النعامة", desk: 650, home: 900, communes: ["النعامة", "المشرية", "عين الصفراء", "مغرار", "عسلة"] },
+            { code: "46", name: "عين تموشنت", desk: 450, home: 700, communes: ["عين تموشنت", "بني صاف", "حمام بوحجر", "العامرية", "المالح"] },
+            { code: "47", name: "غرداية", desk: 650, home: 950, communes: ["غرداية", "متليلي", "المنيعة (سابقاً)", "القرارة", "بريان", "ضاية بن ضحوة"] },
+            { code: "48", name: "غليزان", desk: 450, home: 700, communes: ["غليزان", "وادي رهيو", "مازونة", "الحمادنة", "زمورة"] },
+            { code: "49", name: "تيميمون", desk: 850, home: 1200, communes: ["تيميمون", "أوقروت", "شروين", "تينركوك"] },
+            { code: "50", name: "برج باجي مختار", desk: 950, home: 1300, communes: ["برج باجي مختار", "تيمياوين"] },
+            { code: "51", name: "أولاد جلال", desk: 550, home: 800, communes: ["أولاد جلال", "سيدي خالد", "الدوسن", "رأس الميعاد"] },
+            { code: "52", name: "بني عباس", desk: 800, home: 1150, communes: ["بني عباس", "إقلي", "كرزاز", "تامترت"] },
+            { code: "53", name: "عين صالح", desk: 900, home: 1250, communes: ["عين صالح", "فقارة الزوى", "إن غار"] },
+            { code: "54", name: "عين قزام", desk: 950, home: 1300, communes: ["عين قزام", "تينزواتين"] },
+            { code: "55", name: "تقرت", desk: 650, home: 950, communes: ["تقرت", "تماسين", "المقارين", "الحجيرة"] },
+            { code: "56", name: "جانت", desk: 950, home: 1300, communes: ["جانت", "برج الحواس"] },
+            { code: "57", name: "المغير", desk: 650, home: 950, communes: ["المغير", "جامعة", "سطيل", "أم الطيور"] },
+            { code: "58", name: "المنيعة", desk: 750, home: 1050, communes: ["المنيعة", "حاسي الفحل", "حاسي القارة"] },
+            { code: "59", name: "أفلو", desk: 600, home: 850, communes: ["أفلو", "سيدي مخلوف", "الحويطة", "الغيشة"] },
+            { code: "60", name: "بريكة", desk: 500, home: 750, communes: ["بريكة", "رأس العيون", "بيضاء برج", "سقانة"] },
+            { code: "61", name: "قصر الشلالة", desk: 450, home: 700, communes: ["قصر الشلالة", "زمالة الأمير عبد القادر", "سرغين", "عين الذهب"] },
+            { code: "62", name: "مسعد", desk: 600, home: 850, communes: ["مسعد", "دلدول", "قطارة", "سلمانة"] },
+            { code: "63", name: "بوسعادة", desk: 550, home: 800, communes: ["بوسعادة", "أولاد سيدي إبراهيم", "جبل أمساعد", "الهامل"] },
+            { code: "64", name: "الأبيض سيدي الشيخ", desk: 700, home: 1000, communes: ["الأبيض سيدي الشيخ", "بوسمغون", "الشقيق", "عرباوة"] },
+            { code: "65", name: "القنطرة", desk: 600, home: 850, communes: ["القنطرة", "عین زعطوط", "وتاية", "البرانس"] },
+            { code: "66", name: "بئر العاتر", desk: 550, home: 800, communes: ["بئر العاتر", "نقرين", "فركان", "أم علي"] },
+            { code: "67", name: "العريشة", desk: 550, home: 800, communes: ["العريشة", "سبدو", "البشير", "العين الكبيرة"] },
+            { code: "68", name: "قصر البخاري", desk: 500, home: 750, communes: ["قصر البخاري", "شلالة العذاورة", "سانق", "عزيز"] },
+            { code: "69", name: "المانعة", desk: 700, home: 1000, communes: ["المانعة", "حاسي الغلة", "تامولقة", "وادي الصباح"] }
+        ];
+
+        const wilayaEl = document.getElementById("wilaya");
+        const communeEl = document.getElementById("commune");
+        const quantityEl = document.getElementById("quantity");
+        const minusBtn = document.getElementById("minusBtn");
+        const plusBtn = document.getElementById("plusBtn");
+        const qtySummaryEl = document.getElementById("qtySummaryText");
+        const itemsPriceEl = document.getElementById("itemsPriceText");
+        const deliveryCostEl = document.getElementById("deliveryCostText");
+        const deliveryLabelEl = document.getElementById("deliveryLabelText");
+        const totalCostEl = document.getElementById("totalCostText");
+        const orderForm = document.getElementById("orderForm");
+        const submitBtn = document.getElementById("submitBtn");
+        const statusMsg = document.getElementById("statusMsg");
+
+        // تعبئة جميع الولايات الـ 69
+        wilayas69.forEach((w, idx) => {
+            const option = document.createElement("option");
+            option.value = String(idx);
+            option.textContent = `${w.code} - ${w.name}`;
+            wilayaEl.appendChild(option);
+        });
+
+        function getQuantity() {
+            const q = parseInt(quantityEl.value, 10);
+            return isNaN(q) || q < 1 ? 1 : q;
+        }
+
+        function getSelectedDeliveryType() {
+            return document.querySelector('input[name="deliveryType"]:checked').value;
+        }
+
+        function refreshCommunesAndPrice(repopulateCommunes = true) {
+            const idx = wilayaEl.value;
+            const dType = getSelectedDeliveryType();
+            const qty = getQuantity();
+            const itemsTotal = UNIT_PRICE * qty;
+
+            qtySummaryEl.textContent = String(qty);
+            itemsPriceEl.textContent = `${itemsTotal} دج`;
+            deliveryLabelEl.textContent = dType === "desk" ? "إلى المكتب" : "إلى المنزل";
+
+            if (idx === "") {
+                if (repopulateCommunes) {
+                    communeEl.innerHTML = '<option value="">اختر البلدية</option>';
+                }
+                deliveryCostEl.textContent = "0 دج";
+                totalCostEl.textContent = `${itemsTotal} دج`;
+                return;
+            }
+
+            const w = wilayas69[Number(idx)];
+            if (repopulateCommunes) {
+                const currentCommune = communeEl.value;
+                communeEl.innerHTML = '<option value="">اختر البلدية</option>';
+                w.communes.forEach(c => {
+                    const opt = document.createElement("option");
+                    opt.value = c;
+                    opt.textContent = c;
+                    if (c === currentCommune) opt.selected = true;
+                    communeEl.appendChild(opt);
+                });
+            }
+
+            const baseShipping = dType === "desk" ? w.desk : w.home;
+            const shipping = MULTIPLY_SHIPPING_BY_QTY ? baseShipping * qty : baseShipping;
+            deliveryCostEl.textContent = `${shipping} دج`;
+            totalCostEl.textContent = `${itemsTotal + shipping} دج`;
+        }
+
+        minusBtn.addEventListener("click", () => {
+            const current = getQuantity();
+            if (current > 1) {
+                quantityEl.value = String(current - 1);
+                refreshCommunesAndPrice(false);
+            }
+        });
+
+        plusBtn.addEventListener("click", () => {
+            const current = getQuantity();
+            quantityEl.value = String(current + 1);
+            refreshCommunesAndPrice(false);
+        });
+
+        quantityEl.addEventListener("input", () => {
+            if (quantityEl.value !== "") {
+                refreshCommunesAndPrice(false);
+            }
+        });
+
+        quantityEl.addEventListener("blur", () => {
+            quantityEl.value = String(getQuantity());
+            refreshCommunesAndPrice(false);
+        });
+
+        wilayaEl.addEventListener("change", () => refreshCommunesAndPrice(true));
+        document.querySelectorAll('input[name="deliveryType"]').forEach(radio => {
+            radio.addEventListener("change", () => refreshCommunesAndPrice(false));
+        });
+
+        orderForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const idx = wilayaEl.value;
+            if (idx === "") return;
+
+            const w = wilayas69[Number(idx)];
+            const dType = getSelectedDeliveryType();
+            const qty = getQuantity();
+            quantityEl.value = String(qty);
+
+            const itemsTotal = UNIT_PRICE * qty;
+            const baseShipping = dType === "desk" ? w.desk : w.home;
+            const shipping = MULTIPLY_SHIPPING_BY_QTY ? baseShipping * qty : baseShipping;
+            const total = itemsTotal + shipping;
+
+            const payload = {
+                firstName: document.getElementById("firstName").value.trim(),
+                lastName: document.getElementById("lastName").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                quantity: qty,
+                wilaya: `${w.code} - ${w.name}`,
+                commune: communeEl.value,
+                deliveryType: dType === "desk" ? "إلى المكتب (Stop Desk)" : "إلى المنزل (À domicile)",
+                unitPrice: UNIT_PRICE,
+                itemsTotal: itemsTotal,
+                shippingPrice: shipping,
+                totalPrice: total
+            };
+
+            const messageText =
+`📦 طلب جديد — Bifa (200 مل)
+👤 الاسم واللقب: ${payload.firstName} ${payload.lastName}
+📞 الهاتف: ${payload.phone}
+🔢 الكمية: ${payload.quantity}
+📍 الولاية: ${payload.wilaya}
+🏘️ البلدية: ${payload.commune}
+🚚 التوصيل: ${payload.deliveryType}
+💰 سعر المنتجات (${payload.quantity} × ${payload.unitPrice}): ${payload.itemsTotal} دج
+🚚 سعر التوصيل: ${payload.shippingPrice} دج
+🧾 المجموع الكلي: ${payload.totalPrice} دج`;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "جاري إرسال الطلب...";
+            statusMsg.style.display = "none";
+
+            try {
+                if (TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN" || TELEGRAM_CHAT_ID === "YOUR_CHAT_ID") {
+                    throw new Error("MISSING_TELEGRAM_CONFIG");
+                }
+
+                const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: messageText
+                    })
+                });
+
+                const data = await res.json();
+                if (!data.ok) throw new Error("TELEGRAM_API_ERROR");
+
+                statusMsg.className = "status-msg status-success";
+                statusMsg.textContent = "تم استلام طلبك بنجاح! سنتواصل معك لتأكيد التوصيل.";
+                statusMsg.style.display = "block";
+                orderForm.reset();
+                quantityEl.value = "1";
+                refreshCommunesAndPrice(true);
+            } catch (err) {
+                statusMsg.className = "status-msg status-error";
+                statusMsg.innerHTML = err.message === "MISSING_TELEGRAM_CONFIG"
+                    ? "يرجى وضع TELEGRAM_BOT_TOKEN و TELEGRAM_CHAT_ID داخل الكود ليصل الطلب إلى بوت التلجرام."
+                    : "تعذر الإرسال التلقائي حالياً. تأكد من صحة التوكن ومعرف المحادثة (Chat ID).";
+                statusMsg.style.display = "block";
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "تأكيد الطلب عبر التلجرام";
+            }
+        });
+    </script>
+</body>
+</html>
 
