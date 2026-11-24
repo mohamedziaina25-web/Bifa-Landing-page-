@@ -210,6 +210,48 @@
             border-color: var(--bifa-blue);
         }
 
+        /* --- تحكم الكمية --- */
+        .qty-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-soft);
+            border: 1.5px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 6px 10px;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            direction: ltr;
+        }
+
+        .qty-btn {
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 8px;
+            background: var(--bifa-blue);
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .qty-btn:hover {
+            background: var(--bifa-blue-dark);
+        }
+
+        .qty-input {
+            width: 56px !important;
+            text-align: center;
+            font-weight: 900;
+            padding: 6px !important;
+        }
+
         .delivery-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -329,12 +371,12 @@
             <p class="product-sub">مزيج منعش من الفواكه المشكلة مع مصاصة مدمجة — يُقدّم بارداً</p>
 
             <div class="product-img-wrap">
-                <!-- ارفع صورة المنتج بجانب index.html باسم product.jpg أو عدّل المسار -->
+                <!-- ارفع صورة المنتج بجانب index.html باسم product.jpg -->
                 <img src="./product.jpg" alt="Bifa مشروب الفواكه المشكلة" onerror="this.style.display='none'">
             </div>
 
             <div class="price-banner">
-                <span class="price-label">سعر المنتج:</span>
+                <span class="price-label">سعر الوحدة:</span>
                 <span class="price-now">2000 دج</span>
             </div>
 
@@ -357,7 +399,7 @@
         <!-- نموذج الطلب -->
         <section class="order-card" id="order-section">
             <h2 class="order-title">اطلب الآن — الدفع عند الاستلام</h2>
-            <p class="order-hint">املأ بياناتك وسيتم إرسال طلبك مباشرة إلى بوت التلجرام</p>
+            <p class="order-hint">املأ بياناتك واختر الكمية وسيتم إرسال طلبك مباشرة إلى بوت التلجرام</p>
 
             <form id="orderForm">
                 <div class="row-2">
@@ -374,6 +416,18 @@
                 <div class="form-group">
                     <label for="phone">رقم الهاتف *</label>
                     <input type="tel" id="phone" required pattern="[0-9+\s]{9,15}" placeholder="05 / 06 / 07 ...">
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">الكمية المطلوبة *</label>
+                    <div class="qty-box">
+                        <span style="font-weight:700; color:var(--text-muted); font-size:0.88rem;">عدد الوحدات (2000 دج / وحدة)</span>
+                        <div class="qty-controls">
+                            <button type="button" class="qty-btn" id="minusBtn" aria-label="إنقاص الكمية">−</button>
+                            <input type="number" id="quantity" class="qty-input" value="1" min="1" max="500" required>
+                            <button type="button" class="qty-btn" id="plusBtn" aria-label="زيادة الكمية">+</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row-2">
@@ -408,8 +462,12 @@
 
                 <div class="summary-box">
                     <div class="summary-row">
-                        <span>سعر المنتج:</span>
-                        <span>2000 دج</span>
+                        <span>الكمية:</span>
+                        <span id="qtySummaryText">1</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>سعر المنتجات:</span>
+                        <span id="itemsPriceText">2000 دج</span>
                     </div>
                     <div class="summary-row">
                         <span>سعر التوصيل (<span id="deliveryLabelText">إلى المكتب</span>):</span>
@@ -432,9 +490,11 @@
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID";
 
-        const PRODUCT_PRICE = 2000;
+        const UNIT_PRICE = 2000;
+        // اجعلها true إذا كان سعر التوصيل يتضاعف مع الكمية، أو false إذا كان سعر التوصيل ثابتاً لكل طلب
+        const MULTIPLY_SHIPPING_BY_QTY = false;
 
-        // قائمة الـ 69 ولاية مع أسعار التوصيل (مكتب / منزل) والبلديات — عدّل الأسعار والبلديات حسب جدول شركة التوصيل لديك
+        // قائمة الـ 69 ولاية مع أسعار التوصيل (مكتب / منزل) والبلديات — عدّل الأسعار والبلديات حسب جدول التوصيل لديك
         const wilayas69 = [
             { code: "01", name: "أدرار", desk: 800, home: 1150, communes: ["أدرار", "رقان", "تسابيت", "أولف", "فنوغيل"] },
             { code: "02", name: "الشلف", desk: 450, home: 700, communes: ["الشلف", "تنس", "أبو الحسن", "وادي الفضة", "بوقادير"] },
@@ -509,6 +569,11 @@
 
         const wilayaEl = document.getElementById("wilaya");
         const communeEl = document.getElementById("commune");
+        const quantityEl = document.getElementById("quantity");
+        const minusBtn = document.getElementById("minusBtn");
+        const plusBtn = document.getElementById("plusBtn");
+        const qtySummaryEl = document.getElementById("qtySummaryText");
+        const itemsPriceEl = document.getElementById("itemsPriceText");
         const deliveryCostEl = document.getElementById("deliveryCostText");
         const deliveryLabelEl = document.getElementById("deliveryLabelText");
         const totalCostEl = document.getElementById("totalCostText");
@@ -524,42 +589,81 @@
             wilayaEl.appendChild(option);
         });
 
+        function getQuantity() {
+            const q = parseInt(quantityEl.value, 10);
+            return isNaN(q) || q < 1 ? 1 : q;
+        }
+
         function getSelectedDeliveryType() {
             return document.querySelector('input[name="deliveryType"]:checked').value;
         }
 
-        function refreshCommunesAndPrice() {
+        function refreshCommunesAndPrice(repopulateCommunes = true) {
             const idx = wilayaEl.value;
             const dType = getSelectedDeliveryType();
+            const qty = getQuantity();
+            const itemsTotal = UNIT_PRICE * qty;
 
+            qtySummaryEl.textContent = String(qty);
+            itemsPriceEl.textContent = `${itemsTotal} دج`;
             deliveryLabelEl.textContent = dType === "desk" ? "إلى المكتب" : "إلى المنزل";
 
             if (idx === "") {
-                communeEl.innerHTML = '<option value="">اختر البلدية</option>';
+                if (repopulateCommunes) {
+                    communeEl.innerHTML = '<option value="">اختر البلدية</option>';
+                }
                 deliveryCostEl.textContent = "0 دج";
-                totalCostEl.textContent = `${PRODUCT_PRICE} دج`;
+                totalCostEl.textContent = `${itemsTotal} دج`;
                 return;
             }
 
             const w = wilayas69[Number(idx)];
-            const currentCommune = communeEl.value;
-            communeEl.innerHTML = '<option value="">اختر البلدية</option>';
-            w.communes.forEach(c => {
-                const opt = document.createElement("option");
-                opt.value = c;
-                opt.textContent = c;
-                if (c === currentCommune) opt.selected = true;
-                communeEl.appendChild(opt);
-            });
+            if (repopulateCommunes) {
+                const currentCommune = communeEl.value;
+                communeEl.innerHTML = '<option value="">اختر البلدية</option>';
+                w.communes.forEach(c => {
+                    const opt = document.createElement("option");
+                    opt.value = c;
+                    opt.textContent = c;
+                    if (c === currentCommune) opt.selected = true;
+                    communeEl.appendChild(opt);
+                });
+            }
 
-            const shipping = dType === "desk" ? w.desk : w.home;
+            const baseShipping = dType === "desk" ? w.desk : w.home;
+            const shipping = MULTIPLY_SHIPPING_BY_QTY ? baseShipping * qty : baseShipping;
             deliveryCostEl.textContent = `${shipping} دج`;
-            totalCostEl.textContent = `${PRODUCT_PRICE + shipping} دج`;
+            totalCostEl.textContent = `${itemsTotal + shipping} دج`;
         }
 
-        wilayaEl.addEventListener("change", refreshCommunesAndPrice);
+        minusBtn.addEventListener("click", () => {
+            const current = getQuantity();
+            if (current > 1) {
+                quantityEl.value = String(current - 1);
+                refreshCommunesAndPrice(false);
+            }
+        });
+
+        plusBtn.addEventListener("click", () => {
+            const current = getQuantity();
+            quantityEl.value = String(current + 1);
+            refreshCommunesAndPrice(false);
+        });
+
+        quantityEl.addEventListener("input", () => {
+            if (quantityEl.value !== "") {
+                refreshCommunesAndPrice(false);
+            }
+        });
+
+        quantityEl.addEventListener("blur", () => {
+            quantityEl.value = String(getQuantity());
+            refreshCommunesAndPrice(false);
+        });
+
+        wilayaEl.addEventListener("change", () => refreshCommunesAndPrice(true));
         document.querySelectorAll('input[name="deliveryType"]').forEach(radio => {
-            radio.addEventListener("change", refreshCommunesAndPrice);
+            radio.addEventListener("change", () => refreshCommunesAndPrice(false));
         });
 
         orderForm.addEventListener("submit", async (e) => {
@@ -570,17 +674,24 @@
 
             const w = wilayas69[Number(idx)];
             const dType = getSelectedDeliveryType();
-            const shipping = dType === "desk" ? w.desk : w.home;
-            const total = PRODUCT_PRICE + shipping;
+            const qty = getQuantity();
+            quantityEl.value = String(qty);
+
+            const itemsTotal = UNIT_PRICE * qty;
+            const baseShipping = dType === "desk" ? w.desk : w.home;
+            const shipping = MULTIPLY_SHIPPING_BY_QTY ? baseShipping * qty : baseShipping;
+            const total = itemsTotal + shipping;
 
             const payload = {
                 firstName: document.getElementById("firstName").value.trim(),
                 lastName: document.getElementById("lastName").value.trim(),
                 phone: document.getElementById("phone").value.trim(),
+                quantity: qty,
                 wilaya: `${w.code} - ${w.name}`,
                 commune: communeEl.value,
                 deliveryType: dType === "desk" ? "إلى المكتب (Stop Desk)" : "إلى المنزل (À domicile)",
-                productPrice: PRODUCT_PRICE,
+                unitPrice: UNIT_PRICE,
+                itemsTotal: itemsTotal,
                 shippingPrice: shipping,
                 totalPrice: total
             };
@@ -589,10 +700,11 @@
 `📦 طلب جديد — Bifa (200 مل)
 👤 الاسم واللقب: ${payload.firstName} ${payload.lastName}
 📞 الهاتف: ${payload.phone}
+🔢 الكمية: ${payload.quantity}
 📍 الولاية: ${payload.wilaya}
 🏘️ البلدية: ${payload.commune}
 🚚 التوصيل: ${payload.deliveryType}
-💰 سعر المنتج: ${payload.productPrice} دج
+💰 سعر المنتجات (${payload.quantity} × ${payload.unitPrice}): ${payload.itemsTotal} دج
 🚚 سعر التوصيل: ${payload.shippingPrice} دج
 🧾 المجموع الكلي: ${payload.totalPrice} دج`;
 
@@ -621,7 +733,8 @@
                 statusMsg.textContent = "تم استلام طلبك بنجاح! سنتواصل معك لتأكيد التوصيل.";
                 statusMsg.style.display = "block";
                 orderForm.reset();
-                refreshCommunesAndPrice();
+                quantityEl.value = "1";
+                refreshCommunesAndPrice(true);
             } catch (err) {
                 statusMsg.className = "status-msg status-error";
                 statusMsg.innerHTML = err.message === "MISSING_TELEGRAM_CONFIG"
