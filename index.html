@@ -471,6 +471,10 @@
             line-height: 1;
         }
 
+        .qty-btn:hover {
+            background: var(--navy-dark);
+        }
+
         .qty-input {
             width: 58px !important;
             text-align: center;
@@ -570,16 +574,95 @@
             text-align: center;
         }
 
-        .status-success {
-            background: #dcfce7;
-            color: #14532d;
-            border: 1px solid #86efac;
-        }
-
         .status-error {
             background: #fee2e2;
             color: #7f1d1d;
             border: 1px solid #fca5a5;
+        }
+
+        /* --- صفحة / نافذة تأكيد الطلب --- */
+        .confirmation-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(9, 25, 46, 0.72);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            z-index: 9999;
+        }
+
+        .confirmation-overlay.active {
+            display: flex;
+        }
+
+        .confirmation-card {
+            width: 100%;
+            max-width: 480px;
+            background: var(--white);
+            border-radius: 24px;
+            padding: 28px 22px;
+            text-align: center;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+            border: 2px solid var(--green);
+        }
+
+        .success-icon-circle {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: #dcfce7;
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.1rem;
+            font-weight: 900;
+            margin: 0 auto 14px;
+        }
+
+        .confirmation-title {
+            font-size: 1.55rem;
+            font-weight: 900;
+            color: var(--navy-dark);
+            margin-bottom: 8px;
+        }
+
+        .confirmation-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .receipt-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 14px;
+            text-align: right;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .close-confirm-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: var(--navy);
+            color: var(--white);
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .close-confirm-btn:hover {
+            background: var(--navy-dark);
         }
 
         @media (max-width: 560px) {
@@ -671,7 +754,7 @@
         <!-- نموذج الطلب -->
         <section class="order-card" id="order-section">
             <h2 class="order-title">اطلب الآن — الدفع عند الاستلام</h2>
-            <p class="order-hint">املأ بياناتك واختر اللون والمقاس والكمية وسيتم إرسال طلبك مباشرة إلى بوت التلجرام</p>
+            <p class="order-hint">املأ بياناتك واختر اللون والمقاس والكمية ثم اضغط اطلب الآن</p>
 
             <form id="orderForm">
                 <div class="row-2">
@@ -797,16 +880,27 @@
                     </div>
                 </div>
 
-                <button type="submit" class="submit-btn" id="submitBtn">تأكيد الطلب عبر التلجرام</button>
+                <button type="submit" class="submit-btn" id="submitBtn">اطلب الآن</button>
                 <div class="status-msg" id="statusMsg"></div>
             </form>
         </section>
     </div>
 
+    <!-- صفحة / نافذة تأكيد الطلب للزبون -->
+    <div class="confirmation-overlay" id="confirmationModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+        <div class="confirmation-card">
+            <div class="success-icon-circle">✓</div>
+            <h3 class="confirmation-title" id="confirmTitle">تم استلام طلبك بنجاح</h3>
+            <p class="confirmation-text">سيتم تأكيد طلبك والاتصال بك في أقرب وقت لتحديد موعد التوصيل.</p>
+            <div class="receipt-box" id="receiptDetails"></div>
+            <button type="button" class="close-confirm-btn" id="closeConfirmBtn">حسناً</button>
+        </div>
+    </div>
+
     <script>
-        // إعدادات بوت التلجرام — استبدل القيمتين ببيانات بوتك الحقيقي
-        const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";
-        const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID";
+        // إعدادات بوت التلجرام (@Shopzia_bot)
+        const TELEGRAM_BOT_TOKEN = "9062514091:AAHm62piMF5Gxg7G8TywFpm0Ap0AIiITTyw";
+        const TELEGRAM_CHAT_ID = "5141147404";[span_1](start_span)[span_1](end_span)
 
         const UNIT_PRICE = 3500;
         const MULTIPLY_SHIPPING_BY_QTY = false;
@@ -910,6 +1004,10 @@
         const orderForm = document.getElementById("orderForm");
         const submitBtn = document.getElementById("submitBtn");
         const statusMsg = document.getElementById("statusMsg");
+
+        const confirmationModal = document.getElementById("confirmationModal");
+        const receiptDetailsEl = document.getElementById("receiptDetails");
+        const closeConfirmBtn = document.getElementById("closeConfirmBtn");
 
         let isProgrammaticScroll = false;
 
@@ -1093,6 +1191,16 @@
             radio.addEventListener("change", () => refreshCommunesAndPrice(false));
         });
 
+        closeConfirmBtn.addEventListener("click", () => {
+            confirmationModal.classList.remove("active");
+        });
+
+        confirmationModal.addEventListener("click", (e) => {
+            if (e.target === confirmationModal) {
+                confirmationModal.classList.remove("active");
+            }
+        });
+
         orderForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
@@ -1136,10 +1244,6 @@
             statusMsg.style.display = "none";
 
             try {
-                if (TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN" || TELEGRAM_CHAT_ID === "YOUR_CHAT_ID") {
-                    throw new Error("MISSING_TELEGRAM_CONFIG");
-                }
-
                 const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -1152,9 +1256,13 @@
                 const data = await res.json();
                 if (!data.ok) throw new Error("TELEGRAM_API_ERROR");
 
-                statusMsg.className = "status-msg status-success";
-                statusMsg.textContent = "تم استلام طلبك بنجاح! سنتواصل معك لتأكيد التوصيل.";
-                statusMsg.style.display = "block";
+                receiptDetailsEl.innerHTML =
+                    `<div><strong>الزبون:</strong> ${firstName} ${lastName} (${phone})</div>` +
+                    `<div><strong>الطلب:</strong> حذاء GentStep — لون ${color}، مقاس ${size}، كمية ${qty}</div>` +
+                    `<div><strong>التوصيل:</strong> ${w.code} - ${w.name} / ${commune} (${deliveryText})</div>` +
+                    `<div><strong>المجموع الكلي:</strong> ${total} دج</div>`;
+
+                confirmationModal.classList.add("active");
                 orderForm.reset();
                 colorRadios[0].checked = true;
                 document.querySelector('input[name="shoeSize"][value="42"]').checked = true;
@@ -1163,13 +1271,11 @@
                 goToSlide(0);
             } catch (err) {
                 statusMsg.className = "status-msg status-error";
-                statusMsg.innerHTML = err.message === "MISSING_TELEGRAM_CONFIG"
-                    ? "يرجى وضع TELEGRAM_BOT_TOKEN و TELEGRAM_CHAT_ID داخل الكود ليصل الطلب إلى بوت التلجرام."
-                    : "تعذر الإرسال التلقائي حالياً. تأكد من صحة التوكن ومعرف المحادثة (Chat ID).";
+                statusMsg.textContent = "تعذر إرسال الطلب حالياً. تأكد من الاتصال بالإنترنت ومن أنك ضغطت Start في بوت @Shopzia_bot.";
                 statusMsg.style.display = "block";
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = "تأكيد الطلب عبر التلجرام";
+                submitBtn.textContent = "اطلب الآن";
             }
         });
     </script>
