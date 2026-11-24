@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bifa — مشروب الفواكه المشكلة | طلب سريع</title>
+    <title>GentStep — حذاء رجالي عصري | طلب سريع</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bifa-blue: #163a8a;
-            --bifa-blue-dark: #0e255c;
-            --bifa-red: #d9232e;
-            --bifa-yellow: #facc15;
-            --bifa-green: #15803d;
-            --bifa-green-dark: #116631;
-            --bg-soft: #f3f6fc;
-            --text-main: #1b2232;
-            --text-muted: #5c667a;
+            --navy: #0f294a;
+            --navy-dark: #09192e;
+            --gold: #facc15;
+            --green: #15803d;
+            --green-dark: #116631;
+            --bg-light: #f1f5f9;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
             --white: #ffffff;
         }
 
@@ -27,8 +26,8 @@
         }
 
         body {
-            background-color: var(--bg-soft);
-            color: var(--text-main);
+            background-color: var(--bg-light);
+            color: var(--text-dark);
             line-height: 1.65;
         }
 
@@ -40,66 +39,80 @@
 
         /* --- الشريط العلوي --- */
         .top-bar {
-            background: linear-gradient(135deg, var(--bifa-blue-dark), var(--bifa-blue));
+            background: linear-gradient(135deg, var(--navy-dark), var(--navy));
             color: var(--white);
-            padding: 14px 18px;
+            padding: 13px 16px;
             text-align: center;
             font-weight: 800;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
         }
 
         .top-bar span {
-            color: var(--bifa-yellow);
+            color: var(--gold);
         }
 
-        /* --- قسم عرض المنتج --- */
-        .product-hero {
+        /* --- بطاقة المنتج --- */
+        .product-card {
             background: var(--white);
             border-radius: 24px;
-            padding: 24px 20px;
+            padding: 22px 18px;
             margin-top: 20px;
-            box-shadow: 0 10px 28px rgba(22, 58, 138, 0.08);
+            box-shadow: 0 12px 28px rgba(15, 41, 74, 0.08);
             text-align: center;
-            border: 1px solid #e2e8f5;
+            border: 1px solid #e2e8f0;
         }
 
-        .badge-new {
+        .brand-pill {
             display: inline-block;
-            background: var(--bifa-yellow);
-            color: var(--bifa-blue-dark);
+            background: var(--navy);
+            color: var(--gold);
             font-weight: 900;
             font-size: 0.85rem;
-            padding: 4px 14px;
+            padding: 5px 16px;
             border-radius: 50px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .product-title {
-            font-size: 1.75rem;
+            font-size: 1.65rem;
             font-weight: 900;
-            color: var(--bifa-blue-dark);
+            color: var(--navy-dark);
             margin-bottom: 6px;
         }
 
         .product-sub {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.94rem;
+            margin-bottom: 16px;
+        }
+
+        .media-stack {
+            display: grid;
+            gap: 14px;
             margin-bottom: 18px;
         }
 
-        .product-img-wrap {
-            background: #f9fafc;
-            border: 1px solid #e5ebf5;
-            border-radius: 20px;
-            padding: 18px;
-            margin-bottom: 18px;
+        .media-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 10px;
+            overflow: hidden;
         }
 
-        .product-img-wrap img {
-            max-height: 290px;
-            max-width: 100%;
-            object-fit: contain;
+        .media-box img {
+            width: 100%;
+            height: auto;
+            display: block;
             border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .color-preview-caption {
+            margin-top: 8px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--navy-dark);
         }
 
         .price-banner {
@@ -107,63 +120,62 @@
             justify-content: center;
             align-items: center;
             gap: 12px;
-            background: #fff8e6;
-            border: 1px solid #fde047;
+            background: #fefce8;
+            border: 1.5px solid var(--gold);
             padding: 14px;
             border-radius: 16px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
+        }
+
+        .price-label {
+            font-weight: 800;
+            color: var(--navy-dark);
+            font-size: 0.98rem;
         }
 
         .price-now {
             font-size: 2.1rem;
             font-weight: 900;
-            color: var(--bifa-red);
+            color: var(--navy);
         }
 
-        .price-label {
-            font-weight: 800;
-            color: var(--bifa-blue-dark);
-            font-size: 0.95rem;
-        }
-
-        .features-list {
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            text-align: center;
         }
 
         .feature-item {
-            background: var(--bg-soft);
-            padding: 12px 8px;
+            background: var(--bg-light);
             border-radius: 14px;
-            font-size: 0.85rem;
+            padding: 12px 8px;
+            font-size: 0.84rem;
             font-weight: 700;
-            color: var(--bifa-blue-dark);
+            color: var(--navy-dark);
         }
 
         .feature-item strong {
             display: block;
-            font-size: 1.05rem;
-            color: var(--bifa-red);
+            font-size: 1rem;
+            color: var(--navy);
         }
 
         /* --- نموذج الطلب --- */
         .order-card {
             background: var(--white);
             border-radius: 24px;
-            padding: 26px 20px;
+            padding: 24px 18px;
             margin-top: 22px;
-            box-shadow: 0 12px 30px rgba(22, 58, 138, 0.1);
-            border: 2px solid var(--bifa-blue);
+            box-shadow: 0 12px 30px rgba(15, 41, 74, 0.1);
+            border: 2px solid var(--navy);
         }
 
         .order-title {
             text-align: center;
             font-size: 1.45rem;
             font-weight: 900;
-            color: var(--bifa-blue-dark);
+            color: var(--navy-dark);
             margin-bottom: 6px;
         }
 
@@ -189,7 +201,7 @@
             font-weight: 800;
             font-size: 0.9rem;
             margin-bottom: 6px;
-            color: var(--text-main);
+            color: var(--text-dark);
         }
 
         .form-group input,
@@ -199,15 +211,91 @@
             border-radius: 12px;
             border: 1.5px solid #cbd5e1;
             font-size: 0.95rem;
-            background: #fff;
-            color: var(--text-main);
-            transition: border-color 0.2s;
+            background: var(--white);
+            color: var(--text-dark);
         }
 
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: var(--bifa-blue);
+            border-color: var(--navy);
+        }
+
+        /* --- اختيار اللون --- */
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .color-option {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--bg-light);
+            border: 1.5px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 10px 8px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 0.9rem;
+            transition: 0.15s;
+        }
+
+        .color-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .swatch-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(0, 0, 0, 0.25);
+            flex-shrink: 0;
+        }
+
+        .color-option:has(input:checked) {
+            background: var(--navy);
+            color: var(--gold);
+            border-color: var(--navy);
+        }
+
+        /* --- اختيار المقاس --- */
+        .sizes-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .size-option {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-light);
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 9px 6px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 0.92rem;
+            transition: 0.15s;
+        }
+
+        .size-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .size-option:has(input:checked) {
+            background: var(--navy);
+            color: var(--gold);
+            border-color: var(--navy);
         }
 
         /* --- تحكم الكمية --- */
@@ -215,10 +303,12 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--bg-soft);
+            background: var(--bg-light);
             border: 1.5px solid #cbd5e1;
             border-radius: 12px;
             padding: 6px 10px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .qty-controls {
@@ -233,7 +323,7 @@
             height: 34px;
             border: none;
             border-radius: 8px;
-            background: var(--bifa-blue);
+            background: var(--navy);
             color: var(--white);
             font-size: 1.2rem;
             font-weight: 900;
@@ -242,7 +332,7 @@
         }
 
         .qty-btn:hover {
-            background: var(--bifa-blue-dark);
+            background: var(--navy-dark);
         }
 
         .qty-input {
@@ -262,7 +352,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: var(--bg-soft);
+            background: var(--bg-light);
             border: 1.5px solid #cbd5e1;
             padding: 12px;
             border-radius: 12px;
@@ -273,13 +363,13 @@
 
         .delivery-option input {
             width: auto;
-            accent-color: var(--bifa-blue);
+            accent-color: var(--navy);
         }
 
         /* --- ملخص الفاتورة --- */
         .summary-box {
             background: #f8fafc;
-            border: 1.5px dashed var(--bifa-blue);
+            border: 1.5px dashed var(--navy);
             border-radius: 16px;
             padding: 16px;
             margin: 18px 0;
@@ -301,7 +391,7 @@
             margin-top: 6px;
             font-size: 1.2rem;
             font-weight: 900;
-            color: var(--bifa-red);
+            color: var(--navy);
         }
 
         .submit-btn {
@@ -309,7 +399,7 @@
             padding: 16px;
             border: none;
             border-radius: 14px;
-            background: var(--bifa-green);
+            background: var(--green);
             color: var(--white);
             font-size: 1.15rem;
             font-weight: 900;
@@ -319,8 +409,7 @@
         }
 
         .submit-btn:hover:not(:disabled) {
-            background: var(--bifa-green-dark);
-            transform: translateY(-1px);
+            background: var(--green-dark);
         }
 
         .submit-btn:disabled {
@@ -351,7 +440,7 @@
         }
 
         @media (max-width: 520px) {
-            .row-2, .delivery-grid, .features-list {
+            .row-2, .delivery-grid, .features-grid, .colors-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -360,38 +449,46 @@
 <body>
 
     <div class="top-bar">
-        توصيل متوفر إلى <span>69 ولاية</span> • الدفع عند الاستلام • إرسال فوري للطلب
+        <span>GentStep</span> • أناقة تدوم وراحة لا تُضاهى • توصيل إلى <span>69 ولاية</span>
     </div>
 
     <div class="container">
         <!-- بطاقة المنتج -->
-        <section class="product-hero">
-            <span class="badge-new">جديد • 200 مل</span>
-            <h1 class="product-title">Bifa — مشروب الفواكه المشكلة</h1>
-            <p class="product-sub">مزيج منعش من الفواكه المشكلة مع مصاصة مدمجة — يُقدّم بارداً</p>
+        <section class="product-card">
+            <span class="brand-pill">GentStep — STEP WITH STYLE</span>
+            <h1 class="product-title">حذاء رجالي عصري أنيق</h1>
+            <p class="product-sub">يجمع بين الأناقة والراحة في تصميم واحد — متوفر بثلاثة ألوان أنيقة</p>
 
-            <div class="product-img-wrap">
-                <!-- ارفع صورة المنتج بجانب index.html باسم product.jpg -->
-                <img src="./product.jpg" alt="Bifa مشروب الفواكه المشكلة" onerror="this.style.display='none'">
+            <div class="media-stack">
+                <!-- ارفع صورة البانر باسم banner.png في نفس المستودع -->
+                <div class="media-box">
+                    <img src="./banner.png" alt="GentStep أناقة تدوم وراحة لا تضاهى" onerror="this.parentElement.style.display='none'">
+                </div>
+
+                <!-- صورة الحذاء المتغيرة حسب اللون المختار -->
+                <div class="media-box" id="shoePreviewBox">
+                    <img id="shoePreviewImg" src="./shoe-blue.jpg" alt="حذاء GentStep الرجالي" onerror="this.style.display='none'">
+                    <div class="color-preview-caption" id="colorPreviewCaption">اللون المعروض: أزرق داكن</div>
+                </div>
             </div>
 
             <div class="price-banner">
-                <span class="price-label">سعر الوحدة:</span>
-                <span class="price-now">2000 دج</span>
+                <span class="price-label">سعر الحذاء:</span>
+                <span class="price-now">3500 دج</span>
             </div>
 
-            <div class="features-list">
+            <div class="features-grid">
                 <div class="feature-item">
-                    <strong>200 مل</strong>
-                    حجم عملي ومناسب
+                    <strong>3 ألوان</strong>
+                    أزرق داكن • أسود • بني
+                </div>
+                <div class="feature-item">
+                    <strong>نعل مطاطي</strong>
+                    مانع للانزلاق وخفيف
                 </div>
                 <div class="feature-item">
                     <strong>69 ولاية</strong>
-                    تغطية توصيل شاملة
-                </div>
-                <div class="feature-item">
-                    <strong>مكتب / منزل</strong>
-                    خيارات توصيل مرنة
+                    الدفع عند الاستلام
                 </div>
             </div>
         </section>
@@ -399,7 +496,7 @@
         <!-- نموذج الطلب -->
         <section class="order-card" id="order-section">
             <h2 class="order-title">اطلب الآن — الدفع عند الاستلام</h2>
-            <p class="order-hint">املأ بياناتك واختر الكمية وسيتم إرسال طلبك مباشرة إلى بوت التلجرام</p>
+            <p class="order-hint">املأ بياناتك واختر اللون والمقاس والكمية وسيتم إرسال طلبك مباشرة إلى بوت التلجرام</p>
 
             <form id="orderForm">
                 <div class="row-2">
@@ -419,12 +516,47 @@
                 </div>
 
                 <div class="form-group">
+                    <label>اختر اللون *</label>
+                    <div class="colors-grid">
+                        <label class="color-option">
+                            <input type="radio" name="shoeColor" value="أزرق داكن" data-img="./shoe-blue.jpg" checked>
+                            <span class="swatch-dot" style="background:#153b6b;"></span>
+                            <span>أزرق داكن</span>
+                        </label>
+                        <label class="color-option">
+                            <input type="radio" name="shoeColor" value="أسود" data-img="./shoe-black.png">
+                            <span class="swatch-dot" style="background:#18181b;"></span>
+                            <span>أسود</span>
+                        </label>
+                        <label class="color-option">
+                            <input type="radio" name="shoeColor" value="بني" data-img="./shoe-brown.png">
+                            <span class="swatch-dot" style="background:#6b381e;"></span>
+                            <span>بني</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>المقاس (Pointure) *</label>
+                    <div class="sizes-grid">
+                        <label class="size-option"><input type="radio" name="shoeSize" value="39"><span>39</span></label>
+                        <label class="size-option"><input type="radio" name="shoeSize" value="40"><span>40</span></label>
+                        <label class="size-option"><input type="radio" name="shoeSize" value="41"><span>41</span></label>
+                        <label class="size-option"><input type="radio" name="shoeSize" value="42" checked><span>42</span></label>
+                        <label class="size-option"><input type="radio" name="shoeSize" value="43"><span>43</span></label>
+                        <label class="size-option"><input type="radio" name="shoeSize" value="44"><span>44</span></label>
+                        <label class="size-option"><input type="radio" name="shoeSize" value="45"><span>45</span></label>
+                        <label class="size-option"><input type="radio" name="shoeSize" value="46"><span>46</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="quantity">الكمية المطلوبة *</label>
                     <div class="qty-box">
-                        <span style="font-weight:700; color:var(--text-muted); font-size:0.88rem;">عدد الوحدات (2000 دج / وحدة)</span>
+                        <span style="font-weight:700; color:var(--text-muted); font-size:0.88rem;">عدد القطع (3500 دج / قطعة)</span>
                         <div class="qty-controls">
                             <button type="button" class="qty-btn" id="minusBtn" aria-label="إنقاص الكمية">−</button>
-                            <input type="number" id="quantity" class="qty-input" value="1" min="1" max="500" required>
+                            <input type="number" id="quantity" class="qty-input" value="1" min="1" max="200" required>
                             <button type="button" class="qty-btn" id="plusBtn" aria-label="زيادة الكمية">+</button>
                         </div>
                     </div>
@@ -462,12 +594,20 @@
 
                 <div class="summary-box">
                     <div class="summary-row">
+                        <span>اللون المختار:</span>
+                        <span id="colorSummaryText">أزرق داكن</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>المقاس المختار:</span>
+                        <span id="sizeSummaryText">42</span>
+                    </div>
+                    <div class="summary-row">
                         <span>الكمية:</span>
                         <span id="qtySummaryText">1</span>
                     </div>
                     <div class="summary-row">
                         <span>سعر المنتجات:</span>
-                        <span id="itemsPriceText">2000 دج</span>
+                        <span id="itemsPriceText">3500 دج</span>
                     </div>
                     <div class="summary-row">
                         <span>سعر التوصيل (<span id="deliveryLabelText">إلى المكتب</span>):</span>
@@ -475,7 +615,7 @@
                     </div>
                     <div class="summary-total">
                         <span>المجموع الكلي للدفع:</span>
-                        <span id="totalCostText">2000 دج</span>
+                        <span id="totalCostText">3500 دج</span>
                     </div>
                 </div>
 
@@ -490,11 +630,10 @@
         const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";
         const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID";
 
-        const UNIT_PRICE = 2000;
-        // اجعلها true إذا كان سعر التوصيل يتضاعف مع الكمية، أو false إذا كان سعر التوصيل ثابتاً لكل طلب
+        const UNIT_PRICE = 3500;
         const MULTIPLY_SHIPPING_BY_QTY = false;
 
-        // قائمة الـ 69 ولاية مع أسعار التوصيل (مكتب / منزل) والبلديات — عدّل الأسعار والبلديات حسب جدول التوصيل لديك
+        // قائمة الـ 69 ولاية مع أسعار التوصيل (مكتب / منزل) والبلديات — عدّل الأسعار حسب جدول التوصيل لديك
         const wilayas69 = [
             { code: "01", name: "أدرار", desk: 800, home: 1150, communes: ["أدرار", "رقان", "تسابيت", "أولف", "فنوغيل"] },
             { code: "02", name: "الشلف", desk: 450, home: 700, communes: ["الشلف", "تنس", "أبو الحسن", "وادي الفضة", "بوقادير"] },
@@ -560,7 +699,7 @@
             { code: "62", name: "مسعد", desk: 600, home: 850, communes: ["مسعد", "دلدول", "قطارة", "سلمانة"] },
             { code: "63", name: "بوسعادة", desk: 550, home: 800, communes: ["بوسعادة", "أولاد سيدي إبراهيم", "جبل أمساعد", "الهامل"] },
             { code: "64", name: "الأبيض سيدي الشيخ", desk: 700, home: 1000, communes: ["الأبيض سيدي الشيخ", "بوسمغون", "الشقيق", "عرباوة"] },
-            { code: "65", name: "القنطرة", desk: 600, home: 850, communes: ["القنطرة", "عین زعطوط", "وتاية", "البرانس"] },
+            { code: "65", name: "القنطرة", desk: 600, home: 850, communes: ["القنطرة", "عين زعطوط", "وتاية", "البرانس"] },
             { code: "66", name: "بئر العاتر", desk: 550, home: 800, communes: ["بئر العاتر", "نقرين", "فركان", "أم علي"] },
             { code: "67", name: "العريشة", desk: 550, home: 800, communes: ["العريشة", "سبدو", "البشير", "العين الكبيرة"] },
             { code: "68", name: "قصر البخاري", desk: 500, home: 750, communes: ["قصر البخاري", "شلالة العذاورة", "سانق", "عزيز"] },
@@ -572,6 +711,10 @@
         const quantityEl = document.getElementById("quantity");
         const minusBtn = document.getElementById("minusBtn");
         const plusBtn = document.getElementById("plusBtn");
+        const shoePreviewImg = document.getElementById("shoePreviewImg");
+        const colorPreviewCaption = document.getElementById("colorPreviewCaption");
+        const colorSummaryEl = document.getElementById("colorSummaryText");
+        const sizeSummaryEl = document.getElementById("sizeSummaryText");
         const qtySummaryEl = document.getElementById("qtySummaryText");
         const itemsPriceEl = document.getElementById("itemsPriceText");
         const deliveryCostEl = document.getElementById("deliveryCostText");
@@ -581,13 +724,32 @@
         const submitBtn = document.getElementById("submitBtn");
         const statusMsg = document.getElementById("statusMsg");
 
-        // تعبئة جميع الولايات الـ 69
         wilayas69.forEach((w, idx) => {
             const option = document.createElement("option");
             option.value = String(idx);
             option.textContent = `${w.code} - ${w.name}`;
             wilayaEl.appendChild(option);
         });
+
+        function getSelectedColorOption() {
+            return document.querySelector('input[name="shoeColor"]:checked') || document.querySelector('input[name="shoeColor"]');
+        }
+
+        function syncColorPreview() {
+            const checkedColor = getSelectedColorOption();
+            const colorName = checkedColor ? checkedColor.value : "أزرق داكن";
+            const colorImg = checkedColor ? checkedColor.dataset.img : "./shoe-blue.jpg";
+
+            colorSummaryEl.textContent = colorName;
+            colorPreviewCaption.textContent = `اللون المعروض: ${colorName}`;
+            shoePreviewImg.style.display = "block";
+            shoePreviewImg.src = colorImg;
+        }
+
+        function getSelectedSize() {
+            const checked = document.querySelector('input[name="shoeSize"]:checked');
+            return checked ? checked.value : "42";
+        }
 
         function getQuantity() {
             const q = parseInt(quantityEl.value, 10);
@@ -602,8 +764,11 @@
             const idx = wilayaEl.value;
             const dType = getSelectedDeliveryType();
             const qty = getQuantity();
+            const size = getSelectedSize();
             const itemsTotal = UNIT_PRICE * qty;
 
+            syncColorPreview();
+            sizeSummaryEl.textContent = size;
             qtySummaryEl.textContent = String(qty);
             itemsPriceEl.textContent = `${itemsTotal} دج`;
             deliveryLabelEl.textContent = dType === "desk" ? "إلى المكتب" : "إلى المنزل";
@@ -661,6 +826,14 @@
             refreshCommunesAndPrice(false);
         });
 
+        document.querySelectorAll('input[name="shoeColor"]').forEach(radio => {
+            radio.addEventListener("change", () => refreshCommunesAndPrice(false));
+        });
+
+        document.querySelectorAll('input[name="shoeSize"]').forEach(radio => {
+            radio.addEventListener("change", () => refreshCommunesAndPrice(false));
+        });
+
         wilayaEl.addEventListener("change", () => refreshCommunesAndPrice(true));
         document.querySelectorAll('input[name="deliveryType"]').forEach(radio => {
             radio.addEventListener("change", () => refreshCommunesAndPrice(false));
@@ -674,6 +847,8 @@
 
             const w = wilayas69[Number(idx)];
             const dType = getSelectedDeliveryType();
+            const color = getSelectedColorOption().value;
+            const size = getSelectedSize();
             const qty = getQuantity();
             quantityEl.value = String(qty);
 
@@ -682,31 +857,25 @@
             const shipping = MULTIPLY_SHIPPING_BY_QTY ? baseShipping * qty : baseShipping;
             const total = itemsTotal + shipping;
 
-            const payload = {
-                firstName: document.getElementById("firstName").value.trim(),
-                lastName: document.getElementById("lastName").value.trim(),
-                phone: document.getElementById("phone").value.trim(),
-                quantity: qty,
-                wilaya: `${w.code} - ${w.name}`,
-                commune: communeEl.value,
-                deliveryType: dType === "desk" ? "إلى المكتب (Stop Desk)" : "إلى المنزل (À domicile)",
-                unitPrice: UNIT_PRICE,
-                itemsTotal: itemsTotal,
-                shippingPrice: shipping,
-                totalPrice: total
-            };
+            const firstName = document.getElementById("firstName").value.trim();
+            const lastName = document.getElementById("lastName").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const commune = communeEl.value;
+            const deliveryText = dType === "desk" ? "إلى المكتب (Stop Desk)" : "إلى المنزل (À domicile)";
 
             const messageText =
-`📦 طلب جديد — Bifa (200 مل)
-👤 الاسم واللقب: ${payload.firstName} ${payload.lastName}
-📞 الهاتف: ${payload.phone}
-🔢 الكمية: ${payload.quantity}
-📍 الولاية: ${payload.wilaya}
-🏘️ البلدية: ${payload.commune}
-🚚 التوصيل: ${payload.deliveryType}
-💰 سعر المنتجات (${payload.quantity} × ${payload.unitPrice}): ${payload.itemsTotal} دج
-🚚 سعر التوصيل: ${payload.shippingPrice} دج
-🧾 المجموع الكلي: ${payload.totalPrice} دج`;
+`👞 طلب جديد — GentStep
+👤 الاسم واللقب: ${firstName} ${lastName}
+📞 الهاتف: ${phone}
+🎨 اللون: ${color}
+👟 المقاس (Pointure): ${size}
+🔢 الكمية: ${qty}
+📍 الولاية: ${w.code} - ${w.name}
+🏘️ البلدية: ${commune}
+🚚 التوصيل: ${deliveryText}
+💰 سعر المنتجات (${qty} × ${UNIT_PRICE}): ${itemsTotal} دج
+🚚 سعر التوصيل: ${shipping} دج
+🧾 المجموع الكلي: ${total} دج`;
 
             submitBtn.disabled = true;
             submitBtn.textContent = "جاري إرسال الطلب...";
@@ -733,6 +902,8 @@
                 statusMsg.textContent = "تم استلام طلبك بنجاح! سنتواصل معك لتأكيد التوصيل.";
                 statusMsg.style.display = "block";
                 orderForm.reset();
+                document.querySelector('input[name="shoeColor"][value="أزرق داكن"]').checked = true;
+                document.querySelector('input[name="shoeSize"][value="42"]').checked = true;
                 quantityEl.value = "1";
                 refreshCommunesAndPrice(true);
             } catch (err) {
@@ -749,4 +920,3 @@
     </script>
 </body>
 </html>
-
